@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Monthsary</title>
+    <style>
+        /* Import a cute font */
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* Nice pink gradient background */
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* The Main Card Container */
+        .card {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            z-index: 10;
+            transition: all 0.5s ease;
+        }
+
+        /* Hidden state - shows only the cover */
+        .card.hidden {
+            padding: 40px 50px;
+        }
+
+        /* The Cover (Click to Reveal) */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .cover-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.8rem;
+            color: #d6336c;
+        }
+
+        .tap-text {
+            font-size: 0.9rem;
+            color: #888;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Card Icon Styling */
+        .card-icon {
+            width: 100px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff6b8b, #ff8fab);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.4);
+            animation: wiggle 2s infinite;
+            position: relative;
+        }
+
+        /* Card decorations */
+        .card-icon::before {
+            content: '💕';
+            font-size: 1.5rem;
+        }
+
+        .card-icon::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 15px solid #ff6b8b;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        /* Hidden Content */
+        .content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* The Picture Styling */
+        .picture {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ff6b8b;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* The Text Styling */
+        .text {
+            font-family: 'Pacifico', cursive;
+            font-size: 2rem;
+            color: #d6336c;
+            line-height: 1.2;
+        }
+
+        /* The Heart Styling */
+        .heart {
+            font-size: 3rem;
+            color: #ff0000;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.7));
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); text-shadow: 0 0 10px #ff4d4d; }
+            100% { transform: scale(1.15); text-shadow: 0 0 25px #ff0000; }
+        }
+
+        /* Popping Hearts Animation */
+        .popping-heart {
+            position: absolute;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: popUp 2s ease-out forwards;
+            z-index: 5;
+        }
+
+        @keyframes popUp {
+            0% { opacity: 1; transform: translateY(0) scale(0.5); }
+            20% { transform: translateY(-30px) scale(1.2); }
+            100% { opacity: 0; transform: translateY(-200px) scale(0.8); }
+        }
+
+        /* Background floating hearts */
+        .bg-heart {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.3;
+            animation: floatUp 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.4; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Mobile Adjustment */
+        @media (max-width: 480px) {
+            .picture {
+                width: 150px;
+                height: 150px;
+            }
+            .text {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background hearts will be added by JavaScript -->
+
+    <div class="card hidden" id="mainCard">
+        <!-- COVER - Shows initially -->
+        <div class="cover" id="cover" onclick="revealCard()">
+            <div class="card-icon"></div>
+            <div class="cover-text">A Surprise For You!</div>
+            <div class="tap-text">👆 Tap to open</div>
+        </div>
+
+        <!-- CONTENT - Hidden until clicked -->
+        <div class="content" id="content">
+            <!-- Replace the src below with your own image file (e.g., "picwithher.jpg") when you save it locally -->
+            <img src="picwithher.jpg" alt="Our Photo" class="picture">
+            <div class="text">
+                Happy Monthsary<br>Babi 
+            </div>
+            <div class="heart">💖</div>
+        </div>
+    </div>
+
+    <script>
+        let isRevealed = false;
+
+        // Function to reveal the card
+        function revealCard() {
+            const card = document.getElementById('mainCard');
+            const cover = document.getElementById('cover');
+            const content = document.getElementById('content');
+
+            // Hide cover, show content
+            cover.style.display = 'none';
+            content.classList.add('show');
+            
+            // Remove hidden class to change card padding
+            card.classList.remove('hidden');
+            
+            isRevealed = true;
+
+            // Create celebration hearts
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    createPoppingHeart(window.innerWidth / 2, window.innerHeight / 2);
+                }, i * 100);
+            }
+        }
+
+        // Function to create popping heart
+        function createPoppingHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.classList.add('popping-heart');
+            heart.innerHTML = getRandomHeart();
+            heart.style.left = (x - 20 + Math.random() * 40) + 'px';
+            heart.style.top = (y - 20 + Math.random() * 40) + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 2000);
+        }
+
+        // Function to get random heart emoji
+        function getRandomHeart() {
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💞', '💘', '💟'];
+            return hearts[Math.floor(Math.random() * hearts.length)];
+        }
+
+        // Create background floating hearts
+        function createBackgroundHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('bg-heart');
+            heart.innerHTML = getRandomHeart();
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Auto-create background hearts
+        setInterval(createBackgroundHeart, 500);
+
+        // Click anywhere to create heart (after reveal)
+        document.body.addEventListener('click', (e) => {
+            if (isRevealed) {
+                if (e.clientX && e.clientY) {
+                    createPoppingHeart(e.clientX, e.clientY);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
